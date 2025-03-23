@@ -10,7 +10,37 @@
             <h:outputStylesheet library="css" name="index.css"/>
         </h:head>
         <h:body>
-            <h:outputText value="List length: #{bookView.books.size()}" />
+            <h:form>
+                <div class="container">
+                    <p:dataTable id="dt-books" widgetVar="dtBooks" var="book" value="#{bookView.books}"
+                                 reflow="true" rowKey="#{product.isbn}" paginator="true" 
+                                 rows="10" selectionRowMode="add" paginatorPosition="bottom">
+                        <f:facet name="header">
+                            <p>Inventario de Libros</p>
+                        </f:facet>
+
+                        <p:column headerText="Título" sortBy="#{book.title}" filterBy="#{book.title}">
+                            <h:outputText value="#{book.title}" />
+                        </p:column>
+                        <p:column headerText="Autor" sortBy="#{book.author}" filterBy="#{book.author}">
+                            <h:outputText value="#{book.author}" />
+                        </p:column>
+                        <p:column headerText="Género" sortBy="#{book.genre}" filterBy="#{book.genre}">
+                            <h:outputText value="#{book.genre}" />
+                        </p:column>
+                        <p:column headerText="Fecha de publiación" sortBy="#{book.price}" filterBy="#{book.publicationDate}">
+                            <h:outputText value="#{book.publicationDate}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" type="localDate" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Preico" sortBy="#{book.price}" filterBy="#{book.price}">
+                            <h:outputText value="#{book.price}">
+                                <f:convertNumber type="currency" currencySymbol="$" /> 
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
         </h:body>
     </f:view>
 </html>
