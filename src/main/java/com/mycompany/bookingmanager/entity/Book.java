@@ -1,5 +1,6 @@
 package com.mycompany.bookingmanager.entity;
 
+import com.mycompany.bookingmanager.util.type.Genre;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,26 +16,18 @@ import java.time.LocalDate;
 @Table(name = "books")
 public class Book implements Serializable {
 
-    private enum Genre {
-        FICITION,
-        NOVEL,
-        MYSTERY,
-        THRILLER,
-        NARRATIVE,
-    }
-
     /* 
      * TODO: change from long to UUID
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long isbn;
+    private int isbn;
 
     @Column(nullable = false)
     private String author;
 
     @Column(nullable = false)
-    private float price;
+    private double price;
 
     @Column(nullable = false, unique = true)
     private String title;
@@ -48,7 +41,26 @@ public class Book implements Serializable {
     @Column(name = "is_active", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean isActive;
 
-    public long getIsbn() {
+    public Book() {
+    }
+
+    public Book(
+            String author,
+            double price,
+            String title,
+            LocalDate publicationDate,
+            Genre genre,
+            boolean isActive
+    ) {
+        this.author = author;
+        this.price = price;
+        this.title = title;
+        this.publicationDate = publicationDate;
+        this.genre = genre;
+        this.isActive = isActive;
+    }
+
+    public int getIsbn() {
         return isbn;
     }
 
@@ -60,11 +72,11 @@ public class Book implements Serializable {
         this.author = author;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

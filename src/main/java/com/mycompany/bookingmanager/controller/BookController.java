@@ -1,21 +1,23 @@
-package com.mycompany.bookingmanager.service;
+package com.mycompany.bookingmanager.controller;
 
 import com.mycompany.bookingmanager.entity.Book;
 import com.mycompany.bookingmanager.model.BookRepository;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
 
-public class BookService {
+@Stateless
+public class BookController {
 
     @Inject
     private BookRepository bookRepository;
 
-    public Book findBook(Long id) {
+    public Book findBook(int isbn) {
         return bookRepository
-                .findById(id)
+                .findByIsbn(isbn)
                 .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
@@ -31,9 +33,9 @@ public class BookService {
         }
     }
 
-    public void delete(Long id) {
+    public void delete(int isbn) {
         try {
-            bookRepository.delete(id);
+            bookRepository.delete(isbn);
         } catch (IllegalArgumentException exception) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

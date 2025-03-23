@@ -19,15 +19,15 @@ public class BookRepository {
     }
 
     public List<Book> findAll() {
-        return entityManager.createQuery("SELECT b FROM books b", Book.class).getResultList();
+        return entityManager.createQuery("SELECT b FROM Book b", Book.class).getResultList();
     }
 
-    public Optional<Book> findById(Long id) {
-        return Optional.ofNullable(entityManager.find(Book.class, id));
+    public Optional<Book> findByIsbn(int isbn) {
+        return Optional.ofNullable(entityManager.find(Book.class, isbn));
     }
 
-    public void delete(Long id) {
-        var book = findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid book id: " + id));
+    public void delete(int isbn) {
+        var book = findByIsbn(isbn).orElseThrow(() -> new IllegalArgumentException("Invalid book isbn: " + isbn));
         book.setIsActive(false);
         entityManager.merge(book);
     }
