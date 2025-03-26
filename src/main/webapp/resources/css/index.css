@@ -1,3 +1,19 @@
-.grid-columns-3 {
-    grid-template-columns: repeat(3, 1fr);
+.d-grid {
+    display: grid;
+}
+
+.d-content {
+    display: contents;
+}
+
+.mb-3 {
+    margin-block-end: 1rem;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.date-picker > input {
+    width: 100%;
 }
