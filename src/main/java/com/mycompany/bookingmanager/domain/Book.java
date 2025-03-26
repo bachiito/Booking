@@ -1,4 +1,4 @@
-package com.mycompany.bookingmanager.entity;
+package com.mycompany.bookingmanager.domain;
 
 import com.mycompany.bookingmanager.util.type.Genre;
 import jakarta.persistence.Column;

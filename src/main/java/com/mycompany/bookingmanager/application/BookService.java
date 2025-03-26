@@ -1,7 +1,7 @@
-package com.mycompany.bookingmanager.controller;
+package com.mycompany.bookingmanager.application;
 
-import com.mycompany.bookingmanager.entity.Book;
-import com.mycompany.bookingmanager.model.BookRepository;
+import com.mycompany.bookingmanager.domain.Book;
+import com.mycompany.bookingmanager.domain.BookRepository;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.PersistenceException;
@@ -10,24 +10,24 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 
 @Stateless
-public class BookController {
+public class BookService {
 
     @Inject
     private BookRepository bookRepository;
 
-    public Book findBook(int isbn) {
+    public Book get(int isbn) {
         return bookRepository
                 .findByIsbn(isbn)
                 .orElseThrow(() -> new WebApplicationException(Response.Status.NOT_FOUND));
     }
 
-    public List<Book> findAll() {
+    public List<Book> getAll() {
         return bookRepository.findAll();
     }
 
-    public Book create(Book book) {
+    public void create(Book book) {
         try {
-            return bookRepository.create(book);
+            bookRepository.save(book);
         } catch (PersistenceException exception) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
@@ -41,9 +41,9 @@ public class BookController {
         }
     }
 
-    public Book update(Book book) {
+    public void update(Book book) {
         try {
-            return bookRepository.create(book);
+            bookRepository.save(book);
         } catch (PersistenceException exception) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }

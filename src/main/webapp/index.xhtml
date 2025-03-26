@@ -19,14 +19,14 @@
                             icon="pi pi-plus"
                             styleClass="ui-button-success"
                             update=":dialog:book-creation-form"
-                            actionListener="#{bookView.clearNewBook}"
+                            actionListener="#{bookController.clearNewBook}"
                             oncomplete="PF('bookCreationDialog').show()">
                             <p:resetInput target=":dialog:book-creation-form" />
                         </p:commandButton>
                     </f:facet>
                 </p:toolbar>
 
-                <p:dataTable id="dt-books" widgetVar="dtBooks" var="book" value="#{bookView.books}"
+                <p:dataTable id="dt-books" widgetVar="dtBooks" var="book" value="#{bookController.books}"
                              reflow="true" rowKey="#{product.isbn}" paginator="true" 
                              rows="10" selectionRowMode="add" paginatorPosition="bottom">
                     <f:facet name="header">
@@ -64,7 +64,7 @@
                                 id="title" 
                                 required="true" 
                                 class="w-100" 
-                                value="#{bookView.newBook.title}"/>
+                                value="#{bookController.newBook.title}"/>
                         </div>
                         <div class="mb-3">
                             <p:outputLabel for="author">Author</p:outputLabel>
@@ -72,11 +72,11 @@
                                 id="author" 
                                 required="true" 
                                 class="w-100" 
-                                value="#{bookView.newBook.author}"/>
+                                value="#{bookController.newBook.author}"/>
                         </div>
                         <div class="mb-3">
                             <p:outputLabel for="genre">Género</p:outputLabel>
-                            <p:selectOneRadio id="genre" layout="responsive" columns="2" value="#{bookView.newBook.genre}">
+                            <p:selectOneRadio id="genre" layout="responsive" columns="2" value="#{bookController.newBook.genre}">
                                 <f:selectItem itemLabel="Fiction" itemValue="FICTION" />
                                 <f:selectItem itemLabel="Novel" itemValue="NOVEL" />
                                 <f:selectItem itemLabel="Mystery" itemValue="MYSTERY" />
@@ -95,11 +95,11 @@
                                 symbolPosition="s"
                                 decimalSeparator="."
                                 thousandSeparator=","
-                                value="#{bookView.newBook.price}"/>
+                                value="#{bookController.newBook.price}"/>
                         </div>
                         <div class="d-grid">
                             <p:outputLabel for="publicationDate">Fecha de publiación</p:outputLabel>
-                            <p:datePicker id="publicationDate" class="date-picker" value="#{bookView.newBook.publicationDate}"/>
+                            <p:datePicker id="publicationDate" class="date-picker" value="#{bookController.newBook.publicationDate}"/>
                         </div>
                     </p:outputPanel>
 
@@ -113,7 +113,7 @@
                             value="Guardar" 
                             icon="pi pi-check"
                             update="book-creation-form dt-books" 
-                            actionListener="#{bookView.saveBook}"
+                            actionListener="#{bookController.saveBook}"
                             oncomplete="PF('bookCreationDialog').hide()"/>
                     </f:facet>
                 </p:dialog>

@@ -1,7 +1,7 @@
-package com.mycompany.bookingmanager.view;
+package com.mycompany.bookingmanager.presentation;
 
-import com.mycompany.bookingmanager.entity.Book;
-import com.mycompany.bookingmanager.controller.BookController;
+import com.mycompany.bookingmanager.application.BookService;
+import com.mycompany.bookingmanager.domain.Book;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.faces.application.FacesMessage;
@@ -13,10 +13,10 @@ import org.primefaces.PrimeFaces;
 
 @Named
 @ApplicationScoped
-public class BookView {
+public class BookController {
 
     @Inject
-    private BookController bookService;
+    private BookService bookService;
 
     private List<Book> books;
 
@@ -24,7 +24,7 @@ public class BookView {
 
     @PostConstruct
     public void fetchBooks() {
-        books = bookService.findAll();
+        books = bookService.getAll();
     }
 
     public List<Book> getBooks() {
