@@ -10,27 +10,34 @@
         </h:head>
         <h:body>
             <h:form id="form">
-                <p:growl id="alert"/>
+                <p:growl id="alert" showDetail="true"/>
 
-                <p:toolbar class="my-2">
-                    <f:facet name="right">
-                        <p:commandButton
-                            value="Crear"
-                            icon="pi pi-plus"
-                            styleClass="ui-button-success"
-                            update=":dialog:book-creation-form"
-                            actionListener="#{bookController.clearNewBook}"
-                            oncomplete="PF('bookCreationDialog').show()">
-                            <p:resetInput target=":dialog:book-creation-form" />
-                        </p:commandButton>
-                    </f:facet>
-                </p:toolbar>
-
-                <p:dataTable id="dt-books" widgetVar="dtBooks" var="book" value="#{bookController.books}"
-                             reflow="true" rowKey="#{product.isbn}" paginator="true" 
-                             rows="10" selectionRowMode="add" paginatorPosition="bottom">
+                <p:dataTable 
+                    rows="10"
+                    var="book"
+                    reflow="true"
+                    id="dt-books"
+                    paginator="true"
+                    widgetVar="dtBooks"
+                    selectionRowMode="new"
+                    paginatorPosition="bottom"
+                    rowKey="#{product.isbn}" 
+                    value="#{bookController.books}"
+                    emptyMessage="El inventario está vacío"
+                    selection="#{bookController.selectedBook}">
                     <f:facet name="header">
-                        <p>Inventario de Libros</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Inventario de Libros</span>
+                            <p:commandButton
+                                value="Crear"
+                                icon="pi pi-plus"
+                                styleClass="ui-button-success"
+                                update=":dialog:book-creation-form"
+                                actionListener="#{bookController.clearNewBook}"
+                                oncomplete="PF('bookCreationDialog').show()">
+                                <p:resetInput target=":dialog:book-creation-form" />
+                            </p:commandButton>
+                        </div>
                     </f:facet>
 
                     <p:column headerText="Título" sortBy="#{book.title}" filterBy="#{book.title}">
@@ -47,10 +54,19 @@
                             <f:convertDateTime pattern="yyyy-MM-dd" type="localDate" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Preico" sortBy="#{book.price}" filterBy="#{book.price}">
+                    <p:column headerText="Preico" sortBy="#{book.price}" filterBy="#{book.price}" class="text-right">
                         <h:outputText value="#{book.price}">
-                            <f:convertNumber type="currency" currencySymbol="$"/> 
+                            <f:convertNumber type="currency" currencySymbol="$ "/> 
                         </h:outputText>
+                    </p:column>
+                    <p:column ariaHeaderText="Acciones" class="text-right">
+                        <p:commandButton 
+                            process="@this"
+                            icon="pi pi-trash"
+                            class="ui-button-danger rounded-button" 
+                            oncomplete="PF('deleteBookDialog').show()">
+                            <f:setPropertyActionListener value="#{book}" target="#{bookController.selectedBook}" />
+                        </p:commandButton>
                     </p:column>
                 </p:dataTable>
             </h:form>
@@ -117,6 +133,27 @@
                             oncomplete="PF('bookCreationDialog').hide()"/>
                     </f:facet>
                 </p:dialog>
+
+                <p:confirmDialog 
+                    widgetVar="deleteBookDialog"
+                    showEffect="fade"
+                    width="300"
+                    message="¿Desea eliminar el libro?" 
+                    header="Confirmación"
+                    severity="warning">
+                    <p:commandButton
+                        value="No"
+                        type="button"
+                        icon="pi pi-times"
+                        styleClass="ui-button-secondary"
+                        onclick="PF('deleteBookDialog').hide()"/>
+                    <p:commandButton 
+                        value="Sí"
+                        icon="pi pi-check"
+                        actionListener="#{bookController.deleteBook}"
+                        process="@this"
+                        oncomplete="PF('deleteBookDialog').hide()"/>
+                </p:confirmDialog>
             </h:form>
         </h:body>
     </f:view>

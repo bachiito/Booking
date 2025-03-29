@@ -35,7 +35,7 @@ public class BookService {
 
     public void delete(int isbn) {
         try {
-            bookRepository.delete(isbn);
+            bookRepository.deactivate(isbn);
         } catch (IllegalArgumentException exception) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
         }

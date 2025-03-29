@@ -11,5 +11,5 @@ public interface BookRepository {
 
     void save(Book book);
 
-    void delete(int isbn);
+    void deactivate(int isbn);
 }

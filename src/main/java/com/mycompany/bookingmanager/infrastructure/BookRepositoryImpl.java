@@ -21,7 +21,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public List<Book> findAll() {
-        return entityManager.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+        return entityManager.createQuery("SELECT b FROM Book b WHERE b.isActive = true", Book.class).getResultList();
     }
 
     @Override
@@ -30,8 +30,8 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
-    public void delete(int isbn) {
-        var book = findByIsbn(isbn).orElseThrow(() -> new IllegalArgumentException("Invalid book isbn: " + isbn));
+    public void deactivate(int isbn) {
+        var book = findByIsbn(isbn).orElseThrow(() -> new IllegalArgumentException("No se encontró el libro con el isbn " + isbn));
         book.setIsActive(false);
         entityManager.merge(book);
     }

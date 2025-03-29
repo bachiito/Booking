@@ -6,6 +6,18 @@
     display: contents;
 }
 
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
 .mb-3 {
     margin-block-end: 1rem;
 }
@@ -16,4 +28,8 @@
 
 .date-picker > input {
     width: 100%;
+}
+
+.text-right {
+    text-align: right;
 }
