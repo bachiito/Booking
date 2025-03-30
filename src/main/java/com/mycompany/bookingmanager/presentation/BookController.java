@@ -18,7 +18,7 @@ public class BookController {
     @Inject
     private BookService bookService;
 
-    private List<Book> books;
+    private List<Book> activeBooks;
 
     private Book newBook;
 
@@ -26,11 +26,11 @@ public class BookController {
 
     @PostConstruct
     public void fetchBooks() {
-        books = bookService.getAll();
+        activeBooks = bookService.getAllActive();
     }
 
     public List<Book> getBooks() {
-        return books;
+        return activeBooks;
     }
 
     public Book getNewBook() {
@@ -51,18 +51,20 @@ public class BookController {
 
     public void saveBook() {
         bookService.create(newBook);
-        fetchBooks();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Libro guardado."));
         PrimeFaces.current().executeScript("PF('bookCreationDialog').hide()");
-        PrimeFaces.current().ajax().update("form:alert", "form:dt-books");
+        updateUI("Libro guardado");
     }
 
     public void deleteBook() {
         var isbn = selectedBook.getIsbn();
         bookService.delete(isbn);
-        selectedBook = null;
+        updateUI("Libro eliminado");
+    }
+
+    private void updateUI(String alertMsg) {
         fetchBooks();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Libro elimando."));
+        selectedBook = null;
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(alertMsg));
         PrimeFaces.current().ajax().update("form:alert", "form:dt-books");
     }
 }

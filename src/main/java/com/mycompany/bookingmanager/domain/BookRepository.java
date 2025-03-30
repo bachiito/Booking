@@ -9,6 +9,8 @@ public interface BookRepository {
 
     List<Book> findAll();
 
+    List<Book> findAllActive();
+
     void save(Book book);
 
     void deactivate(int isbn);

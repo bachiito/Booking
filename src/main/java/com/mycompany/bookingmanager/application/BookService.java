@@ -25,6 +25,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    public List<Book> getAllActive() {
+        return bookRepository.findAllActive();
+    }
+
     public void create(Book book) {
         try {
             bookRepository.save(book);
