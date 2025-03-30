@@ -29,7 +29,7 @@ public class Book implements Serializable {
     @Column(nullable = false)
     private double price;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String title;
 
     @Column(name = "publication_date")
