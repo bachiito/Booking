@@ -111,4 +111,8 @@ public class Book implements Serializable {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
+
+    public void validateBeforeSave() {
+        isActive = true;
+    }
 }

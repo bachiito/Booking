@@ -16,6 +16,7 @@ public class BookRepositoryImpl implements BookRepository {
 
     @Override
     public void save(Book book) {
+        book.validateBeforeSave();
         entityManager.persist(book);
     }
 
