@@ -19,6 +19,11 @@ public class BookRepositoryImpl implements BookRepository {
         book.validateBeforeSave();
         entityManager.persist(book);
     }
+    
+    @Override
+    public void update(Book book) {
+        entityManager.merge(book);
+    }
 
     @Override
     public List<Book> findAll() {

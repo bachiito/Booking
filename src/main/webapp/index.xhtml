@@ -22,7 +22,7 @@
                             icon="pi pi-plus"
                             styleClass="ui-button-success"
                             update=":dialog:book-creation-form"
-                            actionListener="#{bookController.clearNewBook}"
+                            actionListener="#{bookController.resetSelectedBook}"
                             oncomplete="PF('bookCreationDialog').show()">
                             <p:resetInput target=":dialog:book-creation-form" />
                         </p:commandButton>
@@ -43,8 +43,7 @@
                     paginatorPosition="bottom"
                     emptyMessage="El inventario está vacío"
                     rowKey="#{product.isbn}" 
-                    value="#{bookController.books}"
-                    selection="#{bookController.selectedBook}">
+                    value="#{bookController.books}">
                     <f:facet name="header">
                         <div class="text-right">
                             <span class="ui-input-icon-left m-0">
@@ -76,6 +75,15 @@
                     <p:column ariaHeaderText="Acciones" class="text-right">
                         <p:commandButton 
                             process="@this"
+                            icon="pi pi-pencil"
+                            update=":dialog:book-creation-form"
+                            class="ui-button-warning rounded-button mr-2" 
+                            oncomplete="PF('bookCreationDialog').show()">
+                            <p:resetInput target=":dialog:book-creation-form" />
+                            <f:setPropertyActionListener value="#{book}" target="#{bookController.selectedBook}" />
+                        </p:commandButton>
+                        <p:commandButton 
+                            process="@this"
                             icon="pi pi-trash"
                             class="ui-button-danger rounded-button" 
                             oncomplete="PF('deleteBookDialog').show()">
@@ -86,7 +94,7 @@
             </h:form>
 
             <h:form id="dialog">
-                <p:dialog header="Header" showEffect="fade" modal="true" widgetVar="bookCreationDialog" responsive="true">
+                <p:dialog header="Detalles del libro" showEffect="fade" modal="true" widgetVar="bookCreationDialog" responsive="true">
                     <p:outputPanel id="book-creation-form">
                         <div class="mb-3">
                             <p:outputLabel for="title">Título</p:outputLabel>
@@ -94,7 +102,7 @@
                                 id="title" 
                                 required="true" 
                                 class="w-100" 
-                                value="#{bookController.newBook.title}"/>
+                                value="#{bookController.selectedBook.title}"/>
                         </div>
                         <div class="mb-3">
                             <p:outputLabel for="author">Author</p:outputLabel>
@@ -102,16 +110,17 @@
                                 id="author" 
                                 required="true" 
                                 class="w-100" 
-                                value="#{bookController.newBook.author}"/>
+                                value="#{bookController.selectedBook.author}"/>
                         </div>
                         <div class="mb-3">
                             <p:outputLabel for="genre">Género</p:outputLabel>
-                            <p:selectOneRadio id="genre" layout="responsive" columns="2" value="#{bookController.newBook.genre}">
-                                <f:selectItem itemLabel="Fiction" itemValue="FICTION" />
-                                <f:selectItem itemLabel="Novel" itemValue="NOVEL" />
-                                <f:selectItem itemLabel="Mystery" itemValue="MYSTERY" />
-                                <f:selectItem itemLabel="Thriller" itemValue="THRILLER" />
-                                <f:selectItem itemLabel="Narrative" itemValue="NARRATIVE" />
+                            <p:selectOneRadio id="genre" layout="responsive" columns="2" value="#{bookController.selectedBook.genre}">
+                                <f:selectItem itemLabel="Ficción" itemValue="FICTION" />
+                                <f:selectItem itemLabel="Misterio" itemValue="MYSTERY" />
+                                <f:selectItem itemLabel="Suspenso" itemValue="THRILLER" />
+                                <f:selectItem itemLabel="Historia" itemValue="HISTORY" />
+                                <f:selectItem itemLabel="Fantasía" itemValue="FANTASY" />
+                                <f:selectItem itemLabel="Romance" itemValue="ROMANCE" />
                             </p:selectOneRadio>
                         </div>
                         <div class="d-grid mb-3">
@@ -124,11 +133,15 @@
                                 symbolPosition="s"
                                 decimalSeparator="."
                                 thousandSeparator=","
-                                value="#{bookController.newBook.price}"/>
+                                value="#{bookController.selectedBook.price}"/>
                         </div>
                         <div class="d-grid">
                             <p:outputLabel for="publicationDate">Fecha de publiación</p:outputLabel>
-                            <p:datePicker id="publicationDate" class="date-picker" value="#{bookController.newBook.publicationDate}"/>
+                            <p:datePicker 
+                                id="publicationDate" 
+                                class="date-picker" 
+                                value="#{bookController.selectedBook.publicationDate}"
+                                maxdate="#{bookController.maxDate}"/>
                         </div>
                     </p:outputPanel>
 
@@ -141,8 +154,8 @@
                         <p:commandButton 
                             value="Guardar" 
                             icon="pi pi-check"
-                            update="book-creation-form" 
-                            process="book-creation-form @this"
+                            update=":dialog:book-creation-form" 
+                            process=":dialog:book-creation-form @this"
                             actionListener="#{bookController.saveBook}"/>
                     </f:facet>
                 </p:dialog>

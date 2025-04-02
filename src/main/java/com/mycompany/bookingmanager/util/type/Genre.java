@@ -1,11 +1,12 @@
 package com.mycompany.bookingmanager.util.type;
 
 public enum Genre {
-    FICITION("Ficción"),
-    NOVEL("Novel"),
+    FICTION("Ficción"),
     MYSTERY("Misterio"),
     THRILLER("Suspenso"),
-    NARRATIVE("Narrativa");
+    HISTORY("Historia"),
+    ROMANCE("Romance"),
+    FANTASY("Fantasía");
 
     private String genre;
 

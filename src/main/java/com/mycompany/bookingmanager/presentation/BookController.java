@@ -8,6 +8,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import java.time.LocalDate;
 import java.util.List;
 import org.primefaces.PrimeFaces;
 
@@ -20,8 +21,6 @@ public class BookController {
 
     private List<Book> activeBooks;
 
-    private Book newBook;
-
     private Book selectedBook;
 
     @PostConstruct
@@ -33,14 +32,6 @@ public class BookController {
         return activeBooks;
     }
 
-    public Book getNewBook() {
-        return newBook;
-    }
-
-    public void clearNewBook() {
-        newBook = new Book();
-    }
-
     public Book getSelectedBook() {
         return selectedBook;
     }
@@ -49,13 +40,22 @@ public class BookController {
         selectedBook = book;
     }
 
+    public LocalDate getMaxDate() {
+        return LocalDate.now();
+    }
+
     public void saveBook() {
-        if (newBook.getPrice() <= 0) {
+        if (selectedBook.getPrice() <= 0) {
             showAlert("El precio del libro debe de ser mayor a cero");
             return;
         }
 
-        bookService.create(newBook);
+        if (selectedBook.getIsbn() == 0) {
+            bookService.create(selectedBook);
+        } else {
+            bookService.update(selectedBook);
+        }
+
         PrimeFaces.current().executeScript("PF('bookCreationDialog').hide()");
         updateUI("Libro guardado");
     }
@@ -64,6 +64,10 @@ public class BookController {
         var isbn = selectedBook.getIsbn();
         bookService.delete(isbn);
         updateUI("Libro eliminado");
+    }
+
+    public void resetSelectedBook() {
+        selectedBook = new Book();
     }
 
     private void updateUI(String alertMsg) {
@@ -80,9 +84,5 @@ public class BookController {
     private void showAlert(String alertMsg) {
         FacesContext.getCurrentInstance().addMessage("This is supposed to be a string", new FacesMessage(alertMsg));
         PrimeFaces.current().ajax().update("form:alert");
-    }
-
-    private void resetSelectedBook() {
-        selectedBook = null;
     }
 }

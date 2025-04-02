@@ -47,7 +47,7 @@ public class BookService {
 
     public void update(Book book) {
         try {
-            bookRepository.save(book);
+            bookRepository.update(book);
         } catch (PersistenceException exception) {
             throw new WebApplicationException(Response.Status.BAD_REQUEST);
         }
