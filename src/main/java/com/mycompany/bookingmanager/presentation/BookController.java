@@ -50,6 +50,11 @@ public class BookController {
     }
 
     public void saveBook() {
+        if (newBook.getPrice() <= 0) {
+            showAlert("El precio del libro debe de ser mayor a cero");
+            return;
+        }
+
         bookService.create(newBook);
         PrimeFaces.current().executeScript("PF('bookCreationDialog').hide()");
         updateUI("Libro guardado");
@@ -63,8 +68,21 @@ public class BookController {
 
     private void updateUI(String alertMsg) {
         fetchBooks();
+        refreshTable();
+        resetSelectedBook();
+        showAlert(alertMsg);
+    }
+
+    private void refreshTable() {
+        PrimeFaces.current().ajax().update("form:dt-books");
+    }
+
+    private void showAlert(String alertMsg) {
+        FacesContext.getCurrentInstance().addMessage("This is supposed to be a string", new FacesMessage(alertMsg));
+        PrimeFaces.current().ajax().update("form:alert");
+    }
+
+    private void resetSelectedBook() {
         selectedBook = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(alertMsg));
-        PrimeFaces.current().ajax().update("form:alert", "form:dt-books");
     }
 }

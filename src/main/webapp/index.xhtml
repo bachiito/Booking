@@ -18,6 +18,7 @@
                     reflow="true"
                     id="dt-books"
                     paginator="true"
+                    stripedRows="true"
                     widgetVar="dtBooks"
                     selectionRowMode="new"
                     paginatorPosition="bottom"
@@ -47,14 +48,14 @@
                         <h:outputText value="#{book.author}" />
                     </p:column>
                     <p:column headerText="Género" sortBy="#{book.genre}" filterBy="#{book.genre}">
-                        <h:outputText value="#{book.genre}" />
+                        <h:outputText value="#{book.genre.genre}" />
                     </p:column>
-                    <p:column headerText="Fecha de publiación" sortBy="#{book.price}" filterBy="#{book.publicationDate}">
+                    <p:column headerText="Fecha de publiación" sortBy="#{book.price}" filterBy="#{book.publicationDate}" class="text-right">
                         <h:outputText value="#{book.publicationDate}">
-                            <f:convertDateTime pattern="yyyy-MM-dd" type="localDate" />
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="localDate" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Preico" sortBy="#{book.price}" filterBy="#{book.price}" class="text-right">
+                    <p:column headerText="Precio" sortBy="#{book.price}" filterBy="#{book.price}" class="text-right">
                         <h:outputText value="#{book.price}">
                             <f:convertNumber type="currency" currencySymbol="$ "/> 
                         </h:outputText>
@@ -104,8 +105,7 @@
                             <p:outputLabel for="price" class="d-block">Precio</p:outputLabel>
                             <p:inputNumber 
                                 id="price" 
-                                symbol="$"
-                                minValue="1"
+                                symbol=" $"
                                 required="true"
                                 class="d-content"
                                 symbolPosition="s"
@@ -128,9 +128,9 @@
                         <p:commandButton 
                             value="Guardar" 
                             icon="pi pi-check"
-                            update="book-creation-form dt-books" 
-                            actionListener="#{bookController.saveBook}"
-                            oncomplete="PF('bookCreationDialog').hide()"/>
+                            update="book-creation-form" 
+                            process="book-creation-form @this"
+                            actionListener="#{bookController.saveBook}"/>
                     </f:facet>
                 </p:dialog>
 
