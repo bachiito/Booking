@@ -18,8 +18,16 @@
     align-items: center;
 }
 
+.mt-3 {
+    margin-block-start: 1rem;
+}
+
 .mb-3 {
     margin-block-end: 1rem;
+}
+
+.m-0 {
+    margin: 0;
 }
 
 .w-100 {
@@ -28,6 +36,10 @@
 
 .date-picker > input {
     width: 100%;
+}
+
+.font-bold {
+    font-weight: bold;
 }
 
 .text-right {
