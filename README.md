@@ -1,5 +1,27 @@
 # Inventario de libros
 
+Este proyecto es una aplicación CRUD (Crear, Leer, Actualizar y Eliminar) para la gestión de un inventario de libros. Permite a los usuarios administrar de manera eficiente una colección de libros, facilitando su registro, consulta, edición y eliminación.
+
+**Características principales:**
+
+**Añadir libros:** Registrar nuevos libros con detalles como título, autor, género, año de publicación y cantidad disponible.
+
+**Consultar libros:** Listar todos los libros almacenados en el sistema con opciones de búsqueda y filtrado.
+
+**Actualizar libros:** Editar la información de los libros existentes.
+
+**Eliminar libros:** Remover libros del inventario cuando ya no estén disponibles.
+
+**Tecnologías utilizadas:**
+
+- PrimeFaces
+- Java
+- MySQL
+
+**Objetivo:**
+Facilitar la gestión de un inventario de libros mediante una interfaz intuitiva y un backend robusto, optimizando la organización y consulta de información.
+
+
 1. Listar activos libros presentes en la base de datos
 
 ![Screenshot from 2025-04-02 01-15-14](https://github.com/user-attachments/assets/8c2e1547-cdd3-4a19-8e3c-d7b8fc42ac5c)
